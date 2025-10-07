@@ -47,6 +47,13 @@ class Kamal::Configuration::Proxy
     secrets[ssl["private_key_pem"]]
   end
 
+  def parse_single_line_certificates
+    ssl = proxy_config["ssl"]
+    return false unless ssl.is_a?(Hash)
+
+    ssl.fetch("parse_single_line_certificates", false)
+  end
+
   def host_tls_cert
     tls_path(config.proxy_boot.tls_directory, "cert.pem")
   end

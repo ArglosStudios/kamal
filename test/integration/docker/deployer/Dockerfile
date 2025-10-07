@@ -22,6 +22,7 @@ COPY app_with_custom_certificate/ app_with_custom_certificate/
 COPY app_with_roles/ app_with_roles/
 COPY app_with_traefik/ app_with_traefik/
 COPY app_with_proxied_accessory/ app_with_proxied_accessory/
+COPY app_with_single_line_custom_certificate/ app_with_single_line_custom_certificate/
 
 RUN rm -rf /root/.ssh
 RUN ln -s /shared/ssh /root/.ssh
@@ -34,6 +35,7 @@ RUN cd app_with_custom_certificate && git init && git add . && git commit -am "I
 RUN cd app_with_roles && git init && git add . && git commit -am "Initial version"
 RUN cd app_with_traefik && git init && git add . && git commit -am "Initial version"
 RUN cd app_with_proxied_accessory && git init && git add . && git commit -am "Initial version"
+RUN cd app_with_single_line_custom_certificate && git init && git add . && git commit -am "Initial version"
 
 HEALTHCHECK --interval=1s CMD pgrep sleep
 

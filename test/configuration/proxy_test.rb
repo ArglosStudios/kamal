@@ -105,6 +105,25 @@ class ConfigurationProxyTest < ActiveSupport::TestCase
     end
   end
 
+  test "ssl with parse_single_line_certificates" do
+    with_test_secrets("secrets" => "CERT_PEM=certificate\nKEY_PEM=private_key") do
+      @deploy[:proxy] = {
+        "ssl" => {
+          "certificate_pem" => "CERT_PEM",
+          "private_key_pem" => "KEY_PEM",
+          "parse_single_line_certificates" => true
+        },
+        "host" => "example.com"
+      }
+
+      proxy = config.proxy
+      assert_equal true, proxy.parse_single_line_certificates
+      options = proxy.deploy_options
+      assert_equal "/home/kamal-proxy/.apps-config/app/tls/cert.pem", options[:"tls-certificate-path"]
+      assert_equal "/home/kamal-proxy/.apps-config/app/tls/key.pem", options[:"tls-private-key-path"]
+    end
+  end
+
   private
     def config
       Kamal::Configuration.new(@deploy)

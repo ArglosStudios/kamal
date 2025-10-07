@@ -152,6 +152,16 @@ class MainTest < IntegrationTest
     assert_app_is_up version: first_version, cert: "test/integration/docker/deployer/app_with_custom_certificate/certs/cert.pem"
   end
 
+  test "deploy with custom certificate and single line pem" do
+    @app = "app_with_single_line_custom_certificate"
+
+    first_version = latest_app_version
+
+    kamal :setup
+
+    assert_app_is_up version: first_version, cert: "test/integration/docker/deployer/app_with_single_line_custom_certificate/certs/cert.pem"
+  end
+
   private
     def assert_envs(version:)
       assert_env :KAMAL_HOST, "vm1", version: version, vm: :vm1

@@ -13,9 +13,11 @@ class Kamal::Cli::App::SslCertificates
       info "Writing SSL certificates for #{role.name} on #{host}"
       execute *app.create_ssl_directory
       if cert_content = role.proxy.certificate_pem_content
+        cert_content = cert_content.gsub('\n', "\n") if role.proxy.parse_single_line_certificates
         upload!(StringIO.new(cert_content), role.proxy.host_tls_cert, mode: "0644")
       end
       if key_content = role.proxy.private_key_pem_content
+        key_content = key_content.gsub('\n', "\n") if role.proxy.parse_single_line_certificates
         upload!(StringIO.new(key_content), role.proxy.host_tls_key, mode: "0644")
       end
     end
